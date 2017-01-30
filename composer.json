@@ -21,7 +21,7 @@
       "StreamLab\\StreamLabProvider\\": "src/"
     }
   },
-  "minimum-stability":"dev"
+  "minimum-stability":"stable"
 
 
 }
