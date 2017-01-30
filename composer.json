@@ -20,5 +20,7 @@
     "psr-4": {
       "StreamLab\\StreamLabProvider\\": "src/"
     }
-  }
+  },
+  "minimum-stability":"dev",
+  "prefer-stable": true
 }
