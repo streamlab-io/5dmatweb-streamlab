@@ -5,7 +5,7 @@ RealTime messages services streamlab.io
 #installation
 
 run this command form composer
-`composer require 5dmatweb/streamlab`
+`composer require 5dmatweb/streamlab:dev-master`
   
   
  #add service provider 
