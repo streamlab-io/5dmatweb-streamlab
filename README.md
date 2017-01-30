@@ -5,20 +5,19 @@ RealTime messages services streamlab.io
 #installation
 
 run this command form composer
-
-  `composer require 5dmatweb/streamlab`
+`composer require 5dmatweb/streamlab`
   
   
  #add service provider 
  open config/app add this line to provider array
  
-  ```php
-          StreamLab\StreamLabProvider\StreamLabServiceProvider::class,
+```php
+StreamLab\StreamLabProvider\StreamLabServiceProvider::class,
 ```
 
 #and then publish this vendor
 
-    `php artisan vendor:publish`
+`php artisan vendor:publish`
     
 this command will add to files
 1-stream-lab.php on config file
@@ -88,36 +87,32 @@ get app_id and key then add to config/stream-lab.php
 this part send ajax request to route str with post method
 
 ```javascript
-
   function SendData(){
-                        var msg = $('#name').val();
-                        var _token = "{{ csrf_token()  }}";
-                        $.post('str' , {msg:msg , _token:_token} , function(){
-                            $('#name').val(' ');
-                        });
-                    }
-                    
+        var msg = $('#name').val();
+        var _token = "{{ csrf_token()  }}";
+        $.post('str' , {msg:msg , _token:_token} , function(){
+             $('#name').val(' ');
+       });
+  }         
  ```        
  
  this part will connect to api and wating on channel test and show messages on #msg and who online on #online
  
- ```javascript
+```javascript
   var sock = StreamLabSocket;
-                    sock.init("{{ config('stream_lab.app_id')  }}" , 'test');
-                    sock.message(function(event){
-                       sock.showOnlineAndMessages(event , 'msg' , 'online');
-                    });
- ```
+           sock.init("{{ config('stream_lab.app_id')  }}" , 'test');
+           sock.message(function(event){
+           sock.showOnlineAndMessages(event , 'msg' , 'online');
+ });
+```
 
 3- add this to your route
 
 ```php
-
   Route::post('str' , function(\Illuminate\Http\Request $request){
       StreamLab::CreateChannel('test');
       StreamLab::pushMessage('test' , 'SendMessage' , $request->msg);
   });
-
 ```
 
 this will get the message that user send and create testChannel push the mesages to all connect user on this channel
