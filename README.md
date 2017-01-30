@@ -22,6 +22,7 @@ StreamLab\StreamLabProvider\StreamLabServiceProvider::class,
 this command will add to files
 
 1-stream-lab.php on config file
+
 2-StreamLab-soket.js on public/StreamLab/StreamLab-soket.js
 
 #How to Use
