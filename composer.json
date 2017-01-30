@@ -1,0 +1,27 @@
+{
+  "name": "5dmatweb/streamlab",
+  "description": "RealTime messages services streamlab.io",
+  "keywords": ["RealTime", "Messages" , "Streamlab" , "Laravel"],
+  "license": "MIT",
+  "version": "1.0",
+  "type": "package",
+  "authors":[
+        {
+          "name" : "5dmatweb Team",
+          "email" : "admin@5dmat-web.com",
+          "homepage" : "https://streamlab.io",
+          "role" : "Developer"
+        }
+  ],
+  "require": {
+    "php": ">=5.6.4"
+  },
+  "autoload": {
+    "psr-4": {
+      "StreamLab\\StreamLabProvider\\": "src/"
+    }
+  },
+  "minimum-stability":"dev"
+
+
+}
