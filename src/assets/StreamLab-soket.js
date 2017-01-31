@@ -155,7 +155,9 @@ var StreamLabSocket = {
     },
     notificationOption:function( message){
         return {
-            body: message
+            body: message,
+            icon: "/StreamLab/fb-pro.png",
+            timeout: 5000
         };
     }
 };
