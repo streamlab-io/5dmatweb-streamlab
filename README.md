@@ -1,9 +1,6 @@
 # 5dmatweb-streamlab
 RealTime messages services streamlab.io
 
-eeeee
-
-
 #installation
 
 run this command form composer
@@ -119,4 +116,54 @@ this part send ajax request to route str with post method
 
 this will get the message that user send and create testChannel push the mesages to all connect user on this channel
 
+#Disalable web browser notification 
 
+```javascript
+soc.browserNotification = false 
+```
+
+#Set web browser notification title 
+
+```javascript
+soc.title = "your title" 
+```
+
+#Change browser notification Image 
+
+just replace the /public/StreamLab/fb-pro.png with your image
+
+#Get the message only 
+
+ 
+```javascript
+  var sock = StreamLabSocket;
+           sock.init("{{ config('stream_lab.app_id')  }}" , 'test');
+           sock.message(function(event){
+               sock.getMessage();
+            });
+```
+
+
+#Get Who is online on this channel  
+
+ 
+```javascript
+  var sock = StreamLabSocket;
+           sock.init("{{ config('stream_lab.app_id')  }}" , 'test');
+           sock.message(function(event){
+               sock.Online();
+            });
+```
+
+#Add Template to messages show
+
+imagine that you want to show the messages in <li> tag and add come class or id 
+
+```javascript
+  var sock = StreamLabSocket;
+           sock.init("{{ config('stream_lab.app_id')  }}" , 'test');
+           sock.msgtemplate = ['li' , 'className'   , 'idName']
+           sock.message(function(event){
+           sock.showOnlineAndMessages(event , 'msg' , 'online');
+ });
+```
