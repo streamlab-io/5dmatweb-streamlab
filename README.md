@@ -116,7 +116,7 @@ this part send ajax request to route str with post method
 
 this will get the message that user send and create testChannel push the mesages to all connect user on this channel
 
-#Disalble web browser notification 
+#Disable web browser notification 
 
 ```javascript
 soc.browserNotification = false 
