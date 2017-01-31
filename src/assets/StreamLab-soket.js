@@ -155,8 +155,7 @@ var StreamLabSocket = {
     },
     notificationOption:function( message){
         return {
-            body: message,
-            sound: '/StreamLab/sound.mp3'
+            body: message
         };
     }
 };
