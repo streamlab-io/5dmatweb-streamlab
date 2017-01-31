@@ -114,7 +114,7 @@ this part send ajax request to route str with post method
   });
 ```
 
-this will get the message that user send and create testChannel push the mesages to all connect user on this channel
+this will get the message that user send and create testChannel push the messages to all connected user on this channel
 
 #Disable web browser notification 
 
@@ -157,7 +157,7 @@ just replace the /public/StreamLab/fb-pro.png with your image
 
 #Add Template to messages show
 
-imagine that you want to show the messages in <li> tag and add come class or id 
+imagine that you want to show  messages in < li > tag and add class or id 
 
 ```javascript
   var sock = StreamLabSocket;
