@@ -4,27 +4,7 @@
  *   develop with 5dmat-web team
  *   https://streamlab.io
  *   https://5dmat-web.com/
- *       *
- *       * How to Use
- *       *
- *           var soc =  StreamLabSocket;
- *           soc.init('a07374d3-ebd3-4952-95e8-555464cc873e' , 'test' , 'test,hassan,hassan' , 'ssl');
- *           soc.showOnlineAndMessages(event , 'msg' , 'online');
- *           soc.appendMessage(event , 'msg');
- *           soc.appendOnline(event , 'online');
- *           soc.appendMessage(event);
- *           soc.appendOnline(event);
- *           soc.title = "browser nofication title";
- *           soc.browserNotification = false;
- *           sock.getEvent(event?);
- *           sock.checkIfEventExists('test' or array ['test' , 'home' ,'messages']);
- *           $('#msg').append(soc.getMessage(event));
- *           $('#online').html(soc.Online(event));
- *           soc.msgtemplate = ['tag' , 'class' , 'id'];
- *           soc.message(function(event){
- *             soc.showOnlineAndMessages(event , 'msg' , 'online');
- *           });
- *           });
+ *   
  *
  */
 var StreamLabSocket = {
