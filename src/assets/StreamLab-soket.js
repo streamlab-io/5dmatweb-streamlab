@@ -39,6 +39,8 @@ var StreamLabSocket = {
     browserNotification:true,
     ////define template ['tag' , 'id' , 'class']
     msgtemplate:[],
+    token:"",
+    laravel:true,
     /// return data will store here
     data:"",
     init:function(key , channel , event ){
@@ -224,6 +226,35 @@ var StreamLabSocket = {
     },
     doIfEventExists:function(eventname, callback){
         this.inArray(this.getEvent(), eventname) ? callback(this.data.data) : this.console("we can not find this event");
+    },
+    /////ajax requests
+    postData:function(btn_id , url , id , callback  ){
+        var url = this.getUrl(url);
+        var obj = this;
+        $('#'+btn_id).on('click' , function(){
+            $.post(url , obj.BuildData(id) , callback);
+        });
+    },
+    getUrl:function(url){
+        return this.checkProperty(url) ? url : window.location.href;
+    },
+    getFieldValue:function(id){
+        return this.checkProperty(id) ? $('#'+id).val() : false;
+    },
+    BuildData:function(id){
+        if(!this.checkIfArray(id))
+            id = [id];
+        return this.getDataFromArray(id);
+    },
+    getDataFromArray:function(id){
+        var data = {};
+        if(this.laravel)
+            data['_token'] = this.token;
+        for(var i = 0 ; i < id.length ; i++){
+            data[id[i]] = this.getFieldValue(id[i]);
+        }
+        console.log(data);
+        return data;
     }
 };
 
