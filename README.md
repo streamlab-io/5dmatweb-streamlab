@@ -54,7 +54,7 @@ get app_id and key then add to config/stream-lab.php
                         </div>
 
                          <div class="form-group">
-                            <input type="submit" onclick="SendData()" name="submit" value="Submit" class="btn btn-default" />
+                            <input type="submit" id="send" name="submit" value="Submit" class="btn btn-default" />
                          </div>
 
                     </div>
@@ -66,34 +66,32 @@ get app_id and key then add to config/stream-lab.php
             <!-- Latest compiled and minified JavaScript -->
             <script src="StreamLab\StreamLab-soket.js"></script>
             <script>
-                    function SendData(){
-                        var msg = $('#name').val();
-                        var _token = "{{ csrf_token()  }}";
-                        $.post('str' , {msg:msg , _token:_token} , function(){
-                            $('#name').val(' ');
-                        });
-                    }
-                    var sock = StreamLabSocket;
-                    sock.init("{{ config('stream_lab.app_id')  }}" , 'test');
-                    sock.message(function(event){
-                       sock.data = event;
-                       sock.showOnlineAndMessages('msg' , 'online');
-                    });
+                var sock = StreamLabSocket;
+                ///send ajax request
+                sock.token = "{{ csrf_token() }}";
+                sock.postData('send', 'str' , 'name'  , function(){});
+                ///connect to channel
+                sock.init("{{ config('stream_lab.app_id') }}" , 'test');
+                sock.message(function(e){
+                    sock.data = e;
+                    sock.showOnlineAndMessages('msg' , 'online');
+                });
             </script>
         </body>
 </html>
 ```
 
 this part send ajax request to route str with post method
+prams 1 the id of the btn ,
+prams 2 the url to send the ajax request,
+prams 3 array of fields of data [name , pass , email]
+prams 4 call back function
 
 ```javascript
-  function SendData(){
-        var msg = $('#name').val();
-        var _token = "{{ csrf_token()  }}";
-        $.post('str' , {msg:msg , _token:_token} , function(){
-             $('#name').val(' ');
-       });
-  }         
+  var sock = StreamLabSocket;
+  ///send ajax request
+  sock.token = "{{ csrf_token() }}";
+  sock.postData('send', 'str' , 'name'  , function(){});        
  ```        
  
  this part will connect to api and wating on channel test and show messages on #msg and who online on #online
