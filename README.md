@@ -82,6 +82,9 @@ get app_id and key then add to config/stream-lab.php
 ```
 
 this part send ajax request to route str with post method <br>
+line one define new object  <br>
+line two make token for ajax request <br>
+line three funrtion to send ajax request  <br>
 prams 1 the id of the btn , <br>
 prams 2 the url to send the ajax request, <br>
 prams 3 array of fields of data [name , pass , email] <br>
