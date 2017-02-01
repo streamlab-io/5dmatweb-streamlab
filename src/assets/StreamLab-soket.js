@@ -253,9 +253,6 @@ var StreamLabSocket = {
         for(var i = 0 ; i < id.length ; i++){
             data[id[i]] = this.getFieldValue(id[i]);
         }
-        console.log(data);
         return data;
     }
 };
-
-
