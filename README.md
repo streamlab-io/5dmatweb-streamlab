@@ -18,8 +18,8 @@ StreamLab\StreamLabProvider\StreamLabServiceProvider::class,
 
 `php artisan vendor:publish`
     
-this command will add to files
-1-stream-lab.php on config file
+this command will add to files <br>
+1-stream-lab.php on config file <br>
 2-StreamLab-soket.js on public/StreamLab/StreamLab-soket.js
 
 #How to Use
@@ -81,11 +81,11 @@ get app_id and key then add to config/stream-lab.php
 </html>
 ```
 
-this part send ajax request to route str with post method
-prams 1 the id of the btn ,
-prams 2 the url to send the ajax request,
-prams 3 array of fields of data [name , pass , email]
-prams 4 call back function
+this part send ajax request to route str with post method <br>
+prams 1 the id of the btn , <br>
+prams 2 the url to send the ajax request, <br>
+prams 3 array of fields of data [name , pass , email] <br>
+prams 4 call back function <br>
 
 ```javascript
   var sock = StreamLabSocket;
