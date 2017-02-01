@@ -14,6 +14,10 @@
  *           soc.appendOnline(event , 'online');
  *           soc.appendMessage(event);
  *           soc.appendOnline(event);
+ *           soc.title = "browser nofication title";
+ *           soc.browserNotification = false;
+ *           sock.getEvent(event?);
+ *           sock.checkIfEventExists('test' or array ['test' , 'home' ,'messages']);
  *           $('#msg').append(soc.getMessage(event));
  *           $('#online').html(soc.Online(event));
  *           soc.msgtemplate = ['tag' , 'class' , 'id'];
@@ -35,6 +39,8 @@ var StreamLabSocket = {
     browserNotification:true,
     ////define template ['tag' , 'id' , 'class']
     msgtemplate:[],
+    /// return data will store here
+    data:"",
     init:function(key , channel , event ){
         this.openSocket(key ,channel ,event);
         if(this.browserNotification)
@@ -79,47 +85,93 @@ var StreamLabSocket = {
             console.log(e);
         }
     },
-    getSource:function(event){
+    checkIfInArray:function(array , key){
+        if(this.checkIfArray(array)){
+            for(var i = 0; i < array.length;i++){
+                if(array[i].trim() == key.trim())
+                    return [{"event":key , "status": true}];
+            }
+            return false;
+        }
+        return false;
+    },
+    checkIfArray:function(array){
+        return array instanceof Array ? true : false;
+    },
+    getType:function(data){
+        return typeof data;
+    },
+    checkIfEventArrayExists:function(data , eventname){
+        var array = [];
+        for(var i = 0 ; i < eventname.length ; i++){
+            if(this.checkIfInArray(data , eventname[i]))
+                array.push({"event":eventname[i] , "status" : true});
+            else
+                array.push({"event":eventname[i] , "status" : false});
+        }
+        return array;
+    },
+    checkIfEventExists:function(eventname){
+        var events = this.getEvent();
+        if(events) {
+            if (this.checkIfArray(events)) {
+                if (this.getType(eventname) === "string")
+                    return this.checkIfInArray(events, eventname);
+                else if (this.checkIfArray(eventname))
+                    return this.checkIfEventArrayExists(events, eventname);
+            }
+        }
+        else
+             return false;
+    },
+    getEvent:function(){
+        var e =  JSON.parse(this.data.data).data.data.hasOwnProperty('events');
+        if(e)
+            return JSON.parse(this.data.data).data.data.events;
+        else
+            return false;
+    },
+    getSource:function(){
         ///return with channel source
-        return JSON.parse(event.data).data.source;
+        return JSON.parse(this.data.data).data.source;
     },
-    getMessage:function(event){
+    getMessage:function(){
         /// return with message
-        return JSON.parse(event.data).data.data.data;
+        return JSON.parse(this.data.data).data.data.data;
     },
-    appendMessage:function(event , id){
-        this.makeNotification(this.title , this.getMessage(event));
+    appendMessage:function(id){
+        this.makeNotification(this.title , this.getMessage());
         ///append message to id
         if(this.checkProperty(id))
             if(this.msgtemplate.length > 0){
-                this.addTemplate(this.getMessage(event));
+                this.addTemplate(this.getMessage());
                 $('#'+id).append(this.tag);
             } else{
-                $('#'+id).append(this.getMessage(event)+'<br>');
+                $('#'+id).append(this.getMessage()+'<br>');
             }
         else
-            this.addTag('div' , this.getMessage(event));
+            this.addTag('div' , this.getMessage());
     },
-    Online:function(event){
+    Online:function(){
         ///get online
-        return JSON.parse(event.data).data.data.users;
+        return JSON.parse(this.data.data).data.data.users;
     },
-    appendOnline:function(event , id){
+    appendOnline:function(id){
         ///append online to id
         if(this.checkProperty(id))
-            $('#'+id).html(this.Online(event));
+            $('#'+id).html(this.Online());
         else
-            this.addTag('div' , this.Online(event));
+            this.addTag('div' , this.Online());
     },
-    showOnlineAndMessages:function(event , idMsg , idOnline){
+    showOnlineAndMessages:function( idMsg , idOnline){
         ///append online to id
         ///append message to id
-        if(this.getSource(event) == 'channels') {
+        if(this.getSource() == 'channels') {
             if (this.checkProperty(idOnline))
-                this.appendOnline(event, idOnline);
+                this.appendOnline(idOnline);
         }else{
             if (this.checkProperty(idMsg))
-                this.appendMessage(event , idMsg);
+                this.appendMessage(idMsg);
         }
     },
     addTemplate:function(data){
@@ -159,5 +211,20 @@ var StreamLabSocket = {
             icon: "/StreamLab/fb-pro.png",
             timeout: 5000
         };
+    },
+    inArray:function(array , key){
+        if(this.checkIfArray(array)){
+            for(var i = 0; i < array.length;i++){
+                if(array[i].trim() == key.trim())
+                    return true;
+            }
+            return false;
+        }
+        return false;
+    },
+    doIfEventExists:function(eventname, callback){
+        this.inArray(this.getEvent(), eventname) ? callback(this.data.data) : this.console("we can not find this event");
     }
 };
+
+
