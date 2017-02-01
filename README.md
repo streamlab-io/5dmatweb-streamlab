@@ -76,7 +76,8 @@ get app_id and key then add to config/stream-lab.php
                     var sock = StreamLabSocket;
                     sock.init("{{ config('stream_lab.app_id')  }}" , 'test');
                     sock.message(function(event){
-                       sock.showOnlineAndMessages(event , 'msg' , 'online');
+                       sock.data = event;
+                       sock.showOnlineAndMessages('msg' , 'online');
                     });
             </script>
         </body>
@@ -101,7 +102,8 @@ this part send ajax request to route str with post method
   var sock = StreamLabSocket;
            sock.init("{{ config('stream_lab.app_id')  }}" , 'test');
            sock.message(function(event){
-           sock.showOnlineAndMessages(event , 'msg' , 'online');
+           sock.data = event;
+           sock.showOnlineAndMessages('msg' , 'online');
  });
 ```
 
@@ -139,6 +141,7 @@ just replace the /public/StreamLab/fb-pro.png with your image
   var sock = StreamLabSocket;
            sock.init("{{ config('stream_lab.app_id')  }}" , 'test');
            sock.message(function(event){
+               sock.data = event;
                sock.getMessage();
             });
 ```
@@ -151,6 +154,7 @@ just replace the /public/StreamLab/fb-pro.png with your image
   var sock = StreamLabSocket;
            sock.init("{{ config('stream_lab.app_id')  }}" , 'test');
            sock.message(function(event){
+               sock.data = event;
                sock.Online();
             });
 ```
@@ -164,6 +168,45 @@ imagine that you want to show  messages in < li > tag and add class or id
            sock.init("{{ config('stream_lab.app_id')  }}" , 'test');
            sock.msgtemplate = ['li' , 'className'   , 'idName']
            sock.message(function(event){
-           sock.showOnlineAndMessages(event , 'msg' , 'online');
+           sock.data = event;
+           sock.showOnlineAndMessages( 'msg' , 'online');
  });
+```
+
+#Get events from data 
+
+ 
+```javascript
+  var sock = StreamLabSocket;
+           sock.init("{{ config('stream_lab.app_id')  }}" , 'test');
+           sock.message(function(event){
+               sock.data = event;
+               sock.getEvent();
+            });
+```
+
+#check if event or events exists
+
+ 
+```javascript
+  var sock = StreamLabSocket;
+           sock.init("{{ config('stream_lab.app_id')  }}" , 'test');
+           sock.message(function(event){
+               sock.data = event;
+               sock.checkIfEventExists(['SendMessage' , 'HomeMessage' , 'home' , 'test']))
+            });
+```
+
+#if event come do something
+
+ 
+```javascript
+  var sock = StreamLabSocket;
+           sock.init("{{ config('stream_lab.app_id')  }}" , 'test');
+           sock.message(function(event){
+               sock.data = event;
+               sock.doIfEventExists('home' , function(d){
+                   console.log(d)
+               });            
+        });
 ```
