@@ -4,7 +4,6 @@
  *   develop with 5dmat-web team
  *   https://streamlab.io
  *   https://5dmat-web.com/
- *   
  *
  */
 var StreamLabSocket = {
@@ -190,7 +189,7 @@ var StreamLabSocket = {
     notificationOption:function( message){
         return {
             body: message,
-            icon: "/StreamLab/fb-pro.png",
+            icon: this.getUrl+"/StreamLab/fb-pro.png",
             timeout: 5000
         };
     },
