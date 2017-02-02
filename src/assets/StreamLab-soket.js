@@ -18,6 +18,8 @@ var StreamLabSocket = {
     browserNotification:true,
     ////define template ['tag' , 'id' , 'class']
     msgtemplate:[],
+    ///set icon to notification browser
+    icon:"/StreamLab/fb-pro.png",
     token:"",
     laravel:true,
     /// return data will store here
@@ -189,7 +191,7 @@ var StreamLabSocket = {
     notificationOption:function( message){
         return {
             body: message,
-            icon: this.getUrl+"/StreamLab/fb-pro.png",
+            icon: this.icon,
             timeout: 5000
         };
     },
