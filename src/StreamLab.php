@@ -24,7 +24,7 @@ class StreamLab{
     public function CreateChannel($channelName){
         $fullUrlApi = $this->url.'apps/'.$this->appKey.'/channels/'.$channelName.'?token='.$this->token;
         try{
-            return $this->postData($fullUrlApi , $channelName);
+            return $this->PostData($fullUrlApi , '' , 'POST');
         }catch(Exception $ex){
             exit();
         }
@@ -32,11 +32,7 @@ class StreamLab{
     public function DeleteChannel($channelName){
         $fullUrlApi = $this->url.'apps/'.$this->appKey.'/channels/'.$channelName.'?token='.$this->token;
         try{
-            $response =  $this->curl->to($fullUrlApi)->asJson()->delete();
-            if(!$response){
-                $response  = $this->sendWithFileFunction($fullUrlApi , $channelName , 'DELETE' );
-            }
-            return $response;
+            return $this->PostData($fullUrlApi , '' , 'DELETE');
         }catch(Exception $ex){
             exit();
         }
@@ -44,7 +40,7 @@ class StreamLab{
     public function GetChannel($channelName){
         $fullUrlApi = $this->url.'apps/'.$this->appKey.'/channels/'.$channelName.'?token='.$this->token;
         try{
-            return $this->postData($fullUrlApi , '' , $channelName);
+            return $this->PostData($fullUrlApi , '' , 'GET');
         }catch(Exception $ex){
             exit();
         }
@@ -52,7 +48,7 @@ class StreamLab{
     public function GetAllChannels(){
         $fullUrlApi = $this->url.'apps/'.$this->appKey.'/channels?token='.$this->token;
         try{
-            return $this->postData($fullUrlApi , '' , 'GET' );
+            return $this->PostData($fullUrlApi , '' , 'GET');
         }catch(Exception $ex){
             exit();
         }
@@ -67,7 +63,7 @@ class StreamLab{
         ];
         $fullUrlApi = $this->url.'apps/'.$this->appKey.'/channels/'.$channelName.'/events/publish?token='.$this->token;
         try{
-            return $this->postData($fullUrlApi , $data );
+           return $this->PostData($fullUrlApi , $data , 'POST');
         }catch(Exception $ex){
             exit();
         }
@@ -100,45 +96,25 @@ class StreamLab{
         return $out;
     }
 
-    protected function postData($fullUrlApi , $data , $method = "post"){
-        $response =  $this->curl->to($fullUrlApi);
-        if($data != ""){
-            $response = $response->withData($data);
-        }
-         $response =  $response->asJson()->$method();
 
+    protected function PostData($url , $data , $method = "POST"){
+        $response =  $this->curl->to($url)->withData($data)->asJson()->$method();
         if(!$response){
-            $response  = $this->sendWithFileFunction($fullUrlApi , $data , 'POST' );
+           $response =  $this->sendWithFileFunction($url , json_encode($data) , $method);
         }
         return $response;
-
     }
 
+
     protected function sendWithFileFunction($url , $data  , $method = "POST"){
-        $subArray = [];
-        if($data != ''){
-            $subN ['http'] =[
-                'method' => $method,
-                'header' => 'Content-Type: application/json' . "\r\n"
-                    . 'Content-Length: ' . strlen($data) . "\r\n",
-                'content' => $data,
-            ];
-        }else{
-            $subN ['http'] =[
-                'method' => $method,
-                'content' => $data,
-            ];
-        }
-        $result = file_get_contents($url, null, stream_context_create($subArray));
-        return $result;
-        /*$result = file_get_contents($url, null, stream_context_create(array(
+        $result = file_get_contents($url, null, stream_context_create(array(
             'http' => array(
                 'method' => $method,
                 'header' => 'Content-Type: application/json' . "\r\n"
                     . 'Content-Length: ' . strlen($data) . "\r\n",
                 'content' => $data,
             ),
-        )));*/
-
+        )));
+        return $result;
     }
 }
