@@ -113,7 +113,7 @@ prams 4 call back function <br>
 ```php
   Route::post('str' , function(\Illuminate\Http\Request $request){
       StreamLab::CreateChannel('test');
-      StreamLab::pushMessage('test' , 'SendMessage' , $request->msg);
+      StreamLab::pushMessage('test' , 'SendMessage' , $request->name);
   });
 ```
 
