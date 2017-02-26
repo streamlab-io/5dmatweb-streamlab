@@ -84,7 +84,7 @@
                             };
                             slu.getAllUser("{{ url('streamLab/app/user') }}" ,function(online){
                                 slh.showOnlineUsers('onlineusers' , online , ['name']);
-                            }, 10 ,0 , 'test');
+                            }, 10 ,0);
                             slh.addEventListener('sendMessage' , 'click' , function(){
                                 sls.sendMessage("{{ url('streamLab/post/message') }}",{_token:"{{ csrf_token() }}",message:slh.getVal('messageText')},function(){
                                     slh.setVal('messageText' , ' ');
