@@ -93,9 +93,9 @@
                             });
                             //slh.channelTemplate = ['div' , 'id' , 'class'];
                             slh.getAllChannel('channels');
-                            slh.getChannel('test' , null , function(response){
-                                console.log(response);
-                            });
+                            ///slh.getChannel('test' , null , function(response){
+                              ///  console.log(response);
+                            ///});
                         }else{
                             slh.setVal('UserId' , '');
                             alert('Error login')
