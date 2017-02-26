@@ -125,6 +125,39 @@ li = the tag we will put the message in this tag each message will push inside t
 id = id attribute<br>
 calss = class attribute<br>
 
+
+#send message to channel
+now you must know how you can push message to channel we make function to make it easy to you
+```javascript
+  sls.sendMessage(url,data,callback);
+```
+url  = the url will get all users do not worry we set this routes for you<br>
+data = it must be object contain _token , message property<br>
+callback = the function will call when you get users<br>
+
+example
+```javascript
+ sls.sendMessage("{{ url('streamLab/post/message') }}",
+ {
+   _token:"{{ csrf_token()}}"
+   ,message:slh.getVal('messageText')
+ }
+ ,function(){
+  slh.setVal('messageText' , ' ');
+ });
+```
+the <a href="https://github.com/streamlab-io/5dmatweb-streamlab/#set-data-to-input-by-id">slh.setVal</a> and the <a href="https://github.com/streamlab-io/5dmatweb-streamlab/#get-data-from-html-tag">slh.getVal</a> functions are helper function we build to make easy access to data <br>
+and we can make it more usable by add listner function like this
+```javascript
+  slh.addEventListener('sendMessage' , 'click' , function(){
+        sls.sendMessage("{{ url('streamLab/post/message') }}",{_token:"{{ csrf_token()                 }}",message:slh.getVal('messageText')},function(){
+                                    slh.setVal('messageText' , ' ');
+                                });
+  });
+
+```
+addEventListener is helper function we bulid for you see how to use
+
 #source of data
 when we send you data will have property that show you the type of data so you can get this source
 by this fucntion<br>
@@ -162,6 +195,8 @@ slh.onlineTemplate = ['div' , 'id' , 'well']
 li = the tag we will put the user in this tag each user will push inside this tag<br>
 id = id attribute<br>
 calss = class attribute<br>
+
+
 
 
 
@@ -273,8 +308,8 @@ example
         alert('Error login')
        }
  });
-```
 
+```
 #helper function
 we add a lot of helper function to make it easy to show or set or get data we use StreamLabHtml class for this
 
@@ -295,11 +330,7 @@ this function return with tag innerhtml
 ```javascript
   slh.html(id);
 ```
-#append data to html tag
-this function will append data to html tag
-```javascript
-  slh.append(id , data);
-```
+
 #append data to html tag
 this function will append data to html tag
 ```javascript
@@ -332,6 +363,17 @@ this function will get  attribute value
 this function will remove  attribute 
 ```javascript
   slh.removeAttr(id , attrName);
+```
+#addEventListener 
+you can decet user behavior and add some action depend on this behaviorby this function
+```javascript
+  slh.addEventListener(id , action , callback)
+```
+example
+```
+  slh.addEventListener('login' , 'submit' , function(){
+      alert('Hi you press login btn');
+  })
 ```
 
 
