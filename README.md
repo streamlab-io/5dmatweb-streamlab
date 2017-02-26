@@ -20,194 +20,135 @@ StreamLab\StreamLabProvider\StreamLabServiceProvider::class,
     
 this command will add to files <br>
 1-stream-lab.php on config file <br>
-2-StreamLab-soket.js on public/StreamLab/StreamLab-soket.js
+2-StreamLab.js on public/StreamLab/StreamLab-soket.js
+3-test.blade.php on resources/views/test.blade.php
+
+
 
 #How to Use
 1-add account to https://streamlab.io
 
 get app_id and key then add to config/stream-lab.php
 
-2- add this to your blade 
+2- go to this route
+
+  ```
+  yourserver /sl
+  127.0.0.1:8000/sl
+  ```
+this will load test view in your first thing you must <br>
+create user go to this link in our web site <a href="https://streamlab.io/en/dashboard/apps">Apps</a> <br>
+choose your app then go to users tab add new user then add this id in your link<br>
+
+#user controll
+
+we support to save your users info in our api this cool thing to check if users online or not <br>
+and where are they connect or in any channel they subscribe<br>
 
 
-```html
-<html>
-    <head>
-        <title>Some page</title>
-        <!-- bootstrap -->
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-    </head>
-        <body>
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-12">
-                        <h1>
-                            StreamLab.io Chat App
-                        </h1>
+#create user 
+first make object form our lib call StreamLabUser<br>
+then make data object data object must have id ,secret , _token properties<br>
+then call createUser function<br>
 
-                        <div class="well" id="msg" style="height: 300px;overflow: auto"></div>
-                        <div id="online" class="well" ></div>
-
-
-                        <div class="form-group">
-                            <input type="text" name="name" id="name" v-model="" class="form-control"/>
-                        </div>
-
-                         <div class="form-group">
-                            <input type="submit" id="send" name="submit" value="Submit" class="btn btn-default" />
-                         </div>
-
-                    </div>
-                </div>
-            </div>
-
-            <!--jquery -->
-            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
-            <!-- Latest compiled and minified JavaScript -->
-            <script src="StreamLab\StreamLab-soket.js"></script>
-            <script>
-                var sock = StreamLabSocket;
-                ///send ajax request
-                sock.token = "{{ csrf_token() }}";
-                sock.postData('send', 'str' , 'name'  , function(){});
-                ///connect to channel
-                sock.init("{{ config('stream_lab.app_id') }}" , 'test');
-                sock.message(function(e){
-                    sock.data = e;
-                    sock.showOnlineAndMessages('msg' , 'online');
-                });
-            </script>
-        </body>
-</html>
+```javascript
+slu = new StreamLabUser();
+    var data = {
+      id:100,
+      secret:123,
+      _token:"{{ csrf_token() }}",
+      name:"hassan",
+      age:20
+      };
+      slu.createUser("{{ url('streamLab/create/user') }}" , data , function(response){
+                 console.log(response);
+      });
 ```
+you can add any number of property to save in our api
 
-this part send ajax request to route str with post method <br>
-line one define new object  <br>
-line two make token for ajax request <br>
-line three funrtion to send ajax request  <br>
-prams 1 the id of the btn , <br>
-prams 2 the url to send the ajax request, <br>
-prams 3 array of fields of data [name , pass , email] <br>
-prams 4 call back function <br>
+#update user
+first make object form our lib call StreamLabUser<br>
+then make data object data object must have id ,secret , _token properties<br>
+then call updateUser function<br>
+```javascript
+slu = new StreamLabUser();
+    var data = {
+      id:100,
+      secret:123,
+      _token:"{{ csrf_token() }}",
+      name:"hassan",
+      age:20
+      };
+      slu.updateUser("{{ url('streamLab/create/user') }}" , data , function(response){
+                 console.log(response);
+      });
+```
+#get all user
+this option you can get all user register in your app with thier status if they online or offline,<br>
+or you can get online users on channels<br>
+```javascript
+slu.getAllUser(url , callback , limit , offset , channel);
+```
+url  = the url will get all users do not worry we set this routes for you<br>
+callback = the function will call when you get users<br>
+limit =  the user limit<br>
+offset =  get form recorecd number <br>
+channel = if you put this prams this funciton will return with online user on this cahnnel if you leave it <br>
+empty will return with all users on this app <br>
+note  :: if you put channel name you will get the online users only put if leave it empty will return with online <br>
+offline users<br>
+example<br>
+```javascript
+slu.getAllUser("{{ url('streamLab/app/user') }}" ,function(response){
+      /// online users on channel test
+      console.log(response);
+}, 10 ,1 , 'test');
+```
+another example
+```javascript
+slu.getAllUser("{{ url('streamLab/app/user') }}" ,function(response){
+      /// all users on this app
+      console.log(response);
+}, 10 ,1);
+```
+#delete users
+you can delete users from our service with this function 
+```javascript
+slu.userExist(url , userID ,callback)
+```
+url  = the url will get all users do not worry we set this routes for you<br>
+userID = user id
+callback = this will call when get response<br>
+example
+```javascript
+slu.deleteUser("{{ url('streamLab/app/user/delete') }}" , userId , function(response){
+      /// user deleted
+      console.log(response)
+});
+```
+#check if user exist
+you can check if user exist in our api or not just call this function
+```javascript
+slu.userExist(url , userID ,callback)
+```
+url  = the url will get all users do not worry we set this routes for you<br>
+userID = user id
+callback = this will call when get response<br>
+example
 
 ```javascript
-  var sock = StreamLabSocket;
-  ///send ajax request
-  sock.token = "{{ csrf_token() }}";
-  sock.postData('send', 'str' , 'name'  , function(){});        
- ```        
- 
- this part will connect to api and wating on channel test and show messages on #msg and who online on #online
- 
-```javascript
-  var sock = StreamLabSocket;
-           sock.init("{{ config('stream_lab.app_id')  }}" , 'test');
-           sock.message(function(event){
-           sock.data = event;
-           sock.showOnlineAndMessages('msg' , 'online');
+ slu.userExist("{{ url('streamLab/app/checkuser') }}" , 30 , function(response){
+     if(response.status){
+        ///user found 
+         var json = slu.json(response).data.data;
+         alert("Hi " + json.name);
+      }else{
+      //user not found 
+        alert('Error login')
+       }
  });
 ```
 
-3- add this to your route
-
-```php
-  Route::post('str' , function(\Illuminate\Http\Request $request){
-      StreamLab::CreateChannel('test');
-      StreamLab::pushMessage('test' , 'SendMessage' , $request->name);
-  });
-```
-
-this will get the message that user send and create testChannel push the messages to all connected user on this channel
-
-#Disable web browser notification 
-
-```javascript
-soc.browserNotification = false 
-```
-
-#Set web browser notification title 
-
-```javascript
-soc.title = "your title" 
-```
-
-#Change browser notification Image 
-
-just replace the /public/StreamLab/fb-pro.png with your image
-
-#Get the message only 
-
- 
-```javascript
-  var sock = StreamLabSocket;
-           sock.init("{{ config('stream_lab.app_id')  }}" , 'test');
-           sock.message(function(event){
-               sock.data = event;
-               sock.getMessage();
-            });
-```
 
 
-#Get Who is online on this channel  
 
- 
-```javascript
-  var sock = StreamLabSocket;
-           sock.init("{{ config('stream_lab.app_id')  }}" , 'test');
-           sock.message(function(event){
-               sock.data = event;
-               sock.Online();
-            });
-```
-
-#Add Template to messages show
-
-imagine that you want to show  messages in < li > tag and add class or id 
-
-```javascript
-  var sock = StreamLabSocket;
-           sock.init("{{ config('stream_lab.app_id')  }}" , 'test');
-           sock.msgtemplate = ['li' , 'className'   , 'idName']
-           sock.message(function(event){
-           sock.data = event;
-           sock.showOnlineAndMessages( 'msg' , 'online');
- });
-```
-
-#Get events from data 
-
- 
-```javascript
-  var sock = StreamLabSocket;
-           sock.init("{{ config('stream_lab.app_id')  }}" , 'test');
-           sock.message(function(event){
-               sock.data = event;
-               sock.getEvent();
-            });
-```
-
-#check if event or events exists
-
- 
-```javascript
-  var sock = StreamLabSocket;
-           sock.init("{{ config('stream_lab.app_id')  }}" , 'test');
-           sock.message(function(event){
-               sock.data = event;
-               sock.checkIfEventExists(['SendMessage' , 'HomeMessage' , 'home' , 'test']))
-            });
-```
-
-#if event come do something
-
- 
-```javascript
-  var sock = StreamLabSocket;
-           sock.init("{{ config('stream_lab.app_id')  }}" , 'test');
-           sock.message(function(event){
-               sock.data = event;
-               sock.doIfEventExists('home' , function(d){
-                   console.log(d)
-               });            
-        });
-```
