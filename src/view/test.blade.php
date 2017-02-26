@@ -33,7 +33,7 @@
                     </div>
                 </div>
             </div>
-            
+
             <script src="/StreamLab/StreamLab.js"></script>
             <script>
                 var slh = new StreamLabHtml();
@@ -68,23 +68,23 @@
                                     slu.userExist("{{ url('streamLab/app/checkuser') }}" , id , function(response){
                                         if(response.status){
                                             slh.showOnlineUsers('onlineusers' , response , ['name']);
-                                            sln.makeNotification('User ' , 'User Login');
                                         }
                                     })
                                 } , function(id){
-                                    sln.makeNotification('User ' , 'User Logout');
                                 });
 
-                                slh.updateChannelOnline();
+                                slh.updateChannelOnline('channels');
 
                                 if(slh.getSource() == 'messages')
                                     sln.makeNotification("Message From Stream lab" , slh.getMessage());
-
-
+                                if(slh.getSource() == 'user.offline')
+                                    sln.makeNotification('User ' , 'User Logout');
+                                if(slh.getSource() == 'user.online')
+                                    sln.makeNotification('User ' , 'User Login');
                             };
                             slu.getAllUser("{{ url('streamLab/app/user') }}" ,function(online){
                                 slh.showOnlineUsers('onlineusers' , online , ['name']);
-                            }, 10 ,0);
+                            }, 10 ,0 , 'test');
                             slh.addEventListener('sendMessage' , 'click' , function(){
                                 sls.sendMessage("{{ url('streamLab/post/message') }}",{_token:"{{ csrf_token() }}",message:slh.getVal('messageText')},function(){
                                     slh.setVal('messageText' , ' ');
@@ -92,6 +92,9 @@
                             });
                             //slh.channelTemplate = ['div' , 'id' , 'class'];
                             slh.getAllChannel('channels');
+                            slh.getChannel('test' , null , function(response){
+                                console.log(response);
+                            });
                         }else{
                             slh.setVal('UserId' , '');
                             alert('Error login')
@@ -119,7 +122,7 @@
                  });
                  slu.getAllUser("{{-- url('streamLab/app/user') --}}" ,function(response){
                  console.log(response);
-                 }, 10 ,1 , 'test');
+                 }, 10 ,1);
                  slu.deleteUser("{{-- url('streamLab/app/user/delete') --}}" , 100 , function(response){
                  console.log(response)
                  });
