@@ -75,6 +75,14 @@ example
  });
 ```
 
+if you want to allow to any one to subscribe this channel just add the id and the channel name
+```javascript
+  var sls = new StreamLabSocket({
+   appId:"{{ config('stream_lab.app_id') }}",
+   channelName:"test",
+ });
+```
+
 #get data
 after this step to connect to soket now you can recive data from our api <br>
 now you must get this data with this funciton<br>
