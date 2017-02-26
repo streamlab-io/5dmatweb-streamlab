@@ -275,6 +275,63 @@ example
  });
 ```
 
+#helper function
+we add a lot of helper function to make it easy to show or set or get data we use StreamLabHtml class for this
 
+#get data form input by id
+this function return with data form the id you set
+```javascript
+  slh.getVal(id)
+```
+
+#set data to input by id
+this function set data to input by id
+```javascript
+  slh.setVal(id , value);
+```
+
+#get data from html tag
+this function return with tag innerhtml
+```javascript
+  slh.html(id);
+```
+#append data to html tag
+this function will append data to html tag
+```javascript
+  slh.append(id , data);
+```
+#append data to html tag
+this function will append data to html tag
+```javascript
+  slh.append(id , data);
+```
+#hide html element by id
+this function will hide html tag by add style display none
+```javascript
+  slh.hide(id);
+```
+#show html element by id
+this function will show html tag by remove style display none
+```javascript
+  slh.show(id);
+```
+
+#set attribute to tag by id
+this function will add custome  attribute to tag
+```javascript
+  slh.setAttr(id , attrName , attrValue);
+```
+
+#get attribute to tag by id
+this function will get  attribute value
+```javascript
+  slh.getAttr(id , attrName);
+```
+
+#remove attribute to tag by id
+this function will remove  attribute 
+```javascript
+  slh.removeAttr(id , attrName);
+```
 
 
