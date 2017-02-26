@@ -270,6 +270,26 @@ example
  ```
  this code will update the cahnnel test when user login or logout 
  
+#get channel info
+if you want to get channel info you can use this funciton
+```javascript
+  slh.getChannel(channelName , channelSecret , callback , url)
+```
+channelName = the channel name <br>
+channelSecret = if it was private you must have secret <br>
+callback = what happen when you have response this call back will have the return data <br>
+url = the route do not worry about that we set it for you but you still can change it <br>
+
+example 
+```javascript
+   slh.getChannel('test' , null , function(response){
+      /// here will get the channel info you 
+      /// can extract the channel info
+      console.log(response);
+  });
+```
+this will return with public channel info call test
+
 
 
 
