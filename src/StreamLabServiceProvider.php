@@ -12,8 +12,10 @@ class StreamLabServiceProvider extends ServiceProvider
         $path = __DIR__;
         $this->publishes([
             $path.'/config' => base_path('config'),
-            $path.'/assets' => base_path('public/StreamLab')
+            $path.'/assets' => base_path('public/StreamLab'),
+            $path.'/view' => base_path('resources/views')
         ]);
+        $this->loadRoutesFrom(__DIR__.'/routes/streamlabRoutes.php');
     }
     public function register()
     {
