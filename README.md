@@ -150,13 +150,18 @@ the <a href="https://github.com/streamlab-io/5dmatweb-streamlab/#set-data-to-inp
 and we can make it more usable by add listner function like this
 ```javascript
   slh.addEventListener('sendMessage' , 'click' , function(){
-        sls.sendMessage("{{ url('streamLab/post/message') }}",{_token:"{{ csrf_token()                 }}",message:slh.getVal('messageText')},function(){
-                                    slh.setVal('messageText' , ' ');
-                                });
+        sls.sendMessage("{{ url('streamLab/post/message') }}",
+          {
+            _token:"{{ csrf_token()}}",
+            message:slh.getVal('messageText')
+          },
+          function(){
+           slh.setVal('messageText' , ' ');
+        });
   });
 
 ```
-addEventListener is helper function we bulid for you see how to use
+<a href="https://github.com/streamlab-io/5dmatweb-streamlab#addeventlistener">addEventListener</a> is helper function we bulid for you see how to use
 
 #source of data
 when we send you data will have property that show you the type of data so you can get this source
@@ -196,7 +201,36 @@ li = the tag we will put the user in this tag each user will push inside this ta
 id = id attribute<br>
 calss = class attribute<br>
 
+#append login user
+after you show online user you must update if user log out or another user login you must update <br>
+user list with the new data so you can use this function in this <a href="https://github.com/streamlab-io/5dmatweb-streamlab#get-data">action</a> after user set data to our lib you can now updat the list of online user this function will<br> append new user to list and update if user logout this function will update his status
 
+```javascript
+  slh.updateUserList(online , offline)
+```
+
+online = function call if user come online
+offline  = function call if user come offline
+
+example
+
+```javascript
+slh.updateUserList(function(id){
+    ///here where user online
+    ///check if user exist 
+    slu.userExist("{{ url('streamLab/app/checkuser') }}" , id , function(response){
+        if(response.status){
+        ///append user to user list
+         slh.showOnlineUsers('onlineusers' , response , ['name']);
+         sln.makeNotification('User ' , 'User Login');
+       }
+     })
+     } , function(id){
+    ///what you will do if user ofline here
+      sln.makeNotification('User ' , 'User Logout');
+  });
+```
+makeNotification is class that handel browser notfication look more form here
 
 
 
@@ -310,6 +344,38 @@ example
  });
 
 ```
+
+#browser notification
+we make class that handel browser notification 
+
+#allow to use browser notification
+when you make object form browser notification the browserNotification will be true that mean you can use it turn it to <br> false if you need to not use it
+ ```
+  sln = new StreamLabNotification();
+  sln.browserNotification = false
+ ```
+ 
+ #icon 
+ this lib allow to add icon to your notification so the default icon you will find it on public/streamlab/fb-pro.png
+you can replace it or you can add new path or new url like this
+```javascript
+  sln.icon = "/StreamLab/fb-pro.png";
+  ///or
+  icon = "https://streamlab.io/";
+```
+
+#time
+you can add how many time you need to show this notification the default is 500
+```javascript
+  sln.time = 1000
+```
+
+#add notifiction 
+now after this option you can add new notifiction by this fucntion
+```javascript
+  sln.makeNotification(title , message);
+```
+ 
 #helper function
 we add a lot of helper function to make it easy to show or set or get data we use StreamLabHtml class for this
 
@@ -370,7 +436,7 @@ you can decet user behavior and add some action depend on this behaviorby this f
   slh.addEventListener(id , action , callback)
 ```
 example
-```
+```javascript
   slh.addEventListener('login' , 'submit' , function(){
       alert('Hi you press login btn');
   })
