@@ -63,6 +63,7 @@
                                 //console.log(slh.getOnline());
                                 //slh.setMessages('messages');
                                 //slh.setOnline('online');
+                                slh.updateChannelOnline();
                                 slh.setOnlineAndMessages('online' , 'messages');
                                 slh.updateUserList(function(id){
                                     slu.userExist("{{ url('streamLab/app/checkuser') }}" , id , function(response){
@@ -73,7 +74,7 @@
                                 } , function(id){
                                 });
 
-                                slh.updateChannelOnline('channels');
+                                
 
                                 if(slh.getSource() == 'messages')
                                     sln.makeNotification("Message From Stream lab" , slh.getMessage());
