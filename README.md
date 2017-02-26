@@ -20,17 +20,17 @@ StreamLab\StreamLabProvider\StreamLabServiceProvider::class,
     
 this command will add to files <br>
 1-stream-lab.php on config file <br>
-2-StreamLab.js on public/StreamLab/StreamLab-soket.js
-3-test.blade.php on resources/views/test.blade.php
+2-StreamLab.js on public/StreamLab/StreamLab-soket.js<br>
+3-test.blade.php on resources/views/test.blade.php<br>
 
 
 
 #How to Use
-1-add account to https://streamlab.io
+1-add account to https://streamlab.io<br>
 
-get app_id and key then add to config/stream-lab.php
+get app_id and key then add to config/stream-lab.php<br>
 
-2- go to this route
+2- go to this route<br>
 
   ```
   yourserver /sl
@@ -39,6 +39,98 @@ get app_id and key then add to config/stream-lab.php
 this will load test view in your first thing you must <br>
 create user go to this link in our web site <a href="https://streamlab.io/en/dashboard/apps">Apps</a> <br>
 choose your app then go to users tab add new user then add this id in your link<br>
+
+
+#connect to socket
+you can listen to channels by this way frist make new object form our lib StreamLabSocket<br>
+the add this objec to this class<br>
+```javascript
+  var sls = new StreamLabSocket({
+   appId:"",
+   channelName:"",
+   channelSecret:"",
+   event:"*",
+   user_id:"",
+   user_secret:""
+ });
+```
+appId = the app you connect we get htis value from config file<br>
+channelName = the name of channel you want to listen <br>
+channelSecret = if the channel is secret you must add the secret code here<br>
+event = if you want to listn on specific evnet you can * for listen to all event or just add event name 'event'or<br>
+you can listen to more than one like this event1,event2,event3<br>
+user_id = you make user add user id here<br>
+user_secret = if you make user add user_seceret here<br>
+look to user section from here <a href="https://github.com/streamlab-io/5dmatweb-streamlab#user-controll">user section</a><br>
+
+example
+```javascript
+  var sls = new StreamLabSocket({
+   appId:"{{ config('stream_lab.app_id') }}",
+   channelName:"test",
+   channelSecret:"",
+   event:"*",
+   user_id:1000,
+   user_secret:"asdasdlkkjkleke040e_sdsdklekj"
+ });
+```
+
+#get data
+after this step to connect to soket now you can recive data from our api <br>
+now you must get this data with this funciton<br>
+```
+var slh = new StreamLabHtml()
+sls.socket.onmessage = function(res){
+  ///res is data send from our api
+  ///set this data to our class so you can use our helper function 
+  slh.setData(res);
+}
+```
+after you get data from our api now you must make new object from our html handel class this <br>
+class will allow you to make alot of things easy<br>
+
+#get messages
+you can get message now from our class StreamLabHtml by this function
+```
+slh.getMessage()
+```
+
+#get online 
+you can get number of online on this channel from StreamLabHtml by this function
+```
+slh.getOnline()
+```
+
+#show data to user
+ther are two ways to show data to user frist one <br>
+by this funcitons from StreamLabHtml class<br>
+first way
+```
+  slh.setMessages(id);
+  slh.setOnline(id);
+```
+this functions take the id of the tag that you will show the messages or the online number<br>
+second way
+```
+  slh.setOnlineAndMessages(onlineID , messagesID);
+```
+onlineID = the online number will show in this id<br>
+messagesID = the message will show in this id<br>
+
+you can make tamplate to show message 
+```
+  slh.msgTemplate = ['li' , 'id' , 'calss']
+```
+li = the tag we will put the message in this tag each message will push inside this tag<br>
+id = id attribute<br>
+calss = class attribute<br>
+
+
+
+
+
+
+
 
 #user controll
 
