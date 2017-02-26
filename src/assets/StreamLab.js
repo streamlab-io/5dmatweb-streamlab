@@ -266,7 +266,7 @@ var StreamLabHtml = (function () {
         }
         return true;
     };
-    StreamLabHtml.prototype.updateChannelOnline = function(id , callback){
+    StreamLabHtml.prototype.updateChannelOnline = function(callback){
         if(this.getSource() == 'channels')
             return callback === undefined ? this.updateNumber(this.data.data.data.id) : callback;
     };
