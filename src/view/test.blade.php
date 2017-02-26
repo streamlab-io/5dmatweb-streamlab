@@ -75,7 +75,7 @@
                                     sln.makeNotification('User ' , 'User Logout');
                                 });
 
-                                slh.updateChannelOnline('channels');
+                                slh.updateChannelOnline();
 
                                 if(slh.getSource() == 'messages')
                                     sln.makeNotification("Message From Stream lab" , slh.getMessage());
