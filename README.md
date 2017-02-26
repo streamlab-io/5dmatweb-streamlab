@@ -230,8 +230,38 @@ slh.updateUserList(function(id){
       sln.makeNotification('User ' , 'User Logout');
   });
 ```
-makeNotification is class that handel browser notfication look more form here
+makeNotification is class that handel browser notfication look more form <a href="https://github.com/streamlab-io/5dmatweb-streamlab/#browser-notification">here</a>
 
+
+#get all channel
+we make this function to help you to get all channel you have on you app
+```javascript
+  slh.getAllChannel(id , callback , url);
+```
+id = the id we will show channel in <br>
+callback = optional if you not set we will show the channel name and how many online on it<br>
+url = do not worry abot that we set it for you but you can change if if you want<br>
+example
+ ```javascript
+  //show channels on channels id
+  slh.getAllChannel('channels');
+ ```
+ you can make this more usable bys set channelTemplate by this code
+ ```javascript
+  slh.channelTemplate = ['div' , 'id' , 'class'];
+ ```
+ now each channel you show in div this div will have data-channel attribute and we show online on span<br>
+ this span will have attribute call data-channel-online that is aviable if you not set the callback function<br>
+ 
+ #update channel online user 
+ now after you show all channel maybe you want to update online user <br>
+ if user login or log out<br>
+ use this function inside message <a href="https://github.com/streamlab-io/5dmatweb-streamlab#get-data">action </a>
+ ```javascript
+   slh.updateChannelOnline();
+ ```
+ this code will update the cahnnel test when user login or logout 
+ 
 
 
 
@@ -356,7 +386,7 @@ when you make object form browser notification the browserNotification will be t
  ```
  
  #icon 
- this lib allow to add icon to your notification so the default icon you will find it on public/streamlab/fb-pro.png
+ this lib allow to add icon to your notification so the default icon you will find it on public/streamlab/fb-pro.png<br>
 you can replace it or you can add new path or new url like this
 ```javascript
   sln.icon = "/StreamLab/fb-pro.png";
