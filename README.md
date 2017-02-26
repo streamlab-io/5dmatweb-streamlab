@@ -78,7 +78,7 @@ example
 #get data
 after this step to connect to soket now you can recive data from our api <br>
 now you must get this data with this funciton<br>
-```
+```javascript
 var slh = new StreamLabHtml()
 sls.socket.onmessage = function(res){
   ///res is data send from our api
@@ -91,13 +91,13 @@ class will allow you to make alot of things easy<br>
 
 #get messages
 you can get message now from our class StreamLabHtml by this function
-```
+```javascript
 slh.getMessage()
 ```
 
 #get online 
 you can get number of online on this channel from StreamLabHtml by this function
-```
+```javascript
 slh.getOnline()
 ```
 
@@ -105,29 +105,63 @@ slh.getOnline()
 ther are two ways to show data to user frist one <br>
 by this funcitons from StreamLabHtml class<br>
 first way
-```
+```javascript
   slh.setMessages(id);
   slh.setOnline(id);
 ```
 this functions take the id of the tag that you will show the messages or the online number<br>
 second way
-```
+```javascript
   slh.setOnlineAndMessages(onlineID , messagesID);
 ```
 onlineID = the online number will show in this id<br>
 messagesID = the message will show in this id<br>
 
 you can make tamplate to show message 
-```
+```javascript
   slh.msgTemplate = ['li' , 'id' , 'calss']
 ```
 li = the tag we will put the message in this tag each message will push inside this tag<br>
 id = id attribute<br>
 calss = class attribute<br>
 
+#source of data
+when we send you data will have property that show you the type of data so you can get this source
+by this fucntion<br>
+```javascript
+  slh.getSource()
+```
+this will return <br>
+1- messages = this mean that someone on this channel send message<br>
+2- user.offline = this mean that one user left your channel <br>
+3- user.online = this mean that one user login your channel <br>
+4- channels = this will come  if user or vistor subscribe or left the channel <br>
 
 
+#show online users
 
+you can use this <a href="https://github.com/streamlab-io/5dmatweb-streamlab#get-all-user"> function </a> to get all users we make it easy to extract this info for you you can use this function
+
+```javascript
+  slh.showOnlineUsers(id , data , [property]);
+```
+id = the tag id will show user inside it<br>
+data = user online data for this <a href="https://github.com/streamlab-io/5dmatweb-streamlab#get-all-user"> function </a><br>
+[property] = array of property that you want to show we will by default show users status<br>
+
+example
+```javascript
+  slu.getAllUser("{{ url('streamLab/app/user') }}" ,function(online){
+        slh.showOnlineUsers('onlineusers' , online , ['name']);
+  }, 10 ,0 , 'test');
+```
+you can add users inside specific by this property
+```javascript
+slh.onlineTemplate = ['div' , 'id' , 'well']
+```
+li = the tag we will put the user in this tag each user will push inside this tag<br>
+id = id attribute<br>
+calss = class attribute<br>
 
 
 
