@@ -35,8 +35,23 @@ Route::get('streamLab/app/checkuser' , function(\Illuminate\Http\Request $reques
 });
 
 
+Route::get('streamLab/app/get/channel' , function(\Illuminate\Http\Request $request){
+    return \StreamLab\StreamLabProvider\Facades\StreamLabFacades::GetChannel($request->channelName , $request->secret);
+});
+
 
 Route::get('streamLab/app/user/delete' , function(\Illuminate\Http\Request $request){
     return \StreamLab\StreamLabProvider\Facades\StreamLabFacades::deleteUser($request->id);
+});
+
+
+Route::get('StreamLab/create/Channel' , function(\Illuminate\Http\Request $request){
+    return \StreamLab\StreamLabProvider\Facades\StreamLabFacades::CreateChannel($request->channelName  ,$request->secret);
+});
+
+
+
+Route::get('StreamLab/delete/Channel' , function(\Illuminate\Http\Request $request){
+    return \StreamLab\StreamLabProvider\Facades\StreamLabFacades::DeleteChannel($request->channelName);
 });
 
