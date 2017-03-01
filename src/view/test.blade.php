@@ -102,15 +102,15 @@
 
                 /*
                 /////channel control
-                 slh.createChannel('private' , 'true' , function(response){
+                 slh.createChannel('private', function(response){
                  alert(response.status);
-                 });
+                 } ,'true' );
 
                  slh.deleteChannel('private' , function(response){
                  alert(response.status);
                  });
 
-                 */
+
                  ////user control method
                  slu = new StreamLabUser();
                  var data = {
