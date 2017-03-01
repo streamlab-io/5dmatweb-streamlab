@@ -33,7 +33,7 @@
                     </div>
                 </div>
             </div>
-
+            
             <script src="/StreamLab/StreamLab.js"></script>
             <script>
                 var slh = new StreamLabHtml();
@@ -41,6 +41,7 @@
                 slh.addEventListener('loginBtn' , 'click' , function(){
                     slu = new StreamLabUser();
                     slu.userExist("{{ url('streamLab/app/checkuser') }}" , slh.getVal('UserId') , function(response){
+
                         if(response.status){
                             slh.show('system');
                             slh.hide('login');
@@ -69,23 +70,18 @@
                                     slu.userExist("{{ url('streamLab/app/checkuser') }}" , id , function(response){
                                         if(response.status){
                                             slh.showOnlineUsers('onlineusers' , response , ['name']);
+                                            sln.makeNotification('User ' , 'User Login');
                                         }
                                     })
                                 } , function(id){
+                                    sln.makeNotification('User ' , 'User Logout');
                                 });
-
-                                
-
                                 if(slh.getSource() == 'messages')
                                     sln.makeNotification("Message From Stream lab" , slh.getMessage());
-                                if(slh.getSource() == 'user.offline')
-                                    sln.makeNotification('User ' , 'User Logout');
-                                if(slh.getSource() == 'user.online')
-                                    sln.makeNotification('User ' , 'User Login');
                             };
                             slu.getAllUser("{{ url('streamLab/app/user') }}" ,function(online){
                                 slh.showOnlineUsers('onlineusers' , online , ['name']);
-                            }, 10 ,0 , 'test');
+                            }, 10 ,0);
                             slh.addEventListener('sendMessage' , 'click' , function(){
                                 sls.sendMessage("{{ url('streamLab/post/message') }}",{_token:"{{ csrf_token() }}",message:slh.getVal('messageText')},function(){
                                     slh.setVal('messageText' , ' ');
@@ -93,9 +89,9 @@
                             });
                             //slh.channelTemplate = ['div' , 'id' , 'class'];
                             slh.getAllChannel('channels');
-                            ///slh.getChannel('test' , null , function(response){
-                              ///  console.log(response);
-                            ///});
+                            slh.getChannel('test' , null , function(response){
+                                console.log(response);
+                            });
                         }else{
                             slh.setVal('UserId' , '');
                             alert('Error login')
@@ -105,6 +101,16 @@
 
 
                 /*
+                /////channel control
+                 slh.createChannel('private' , 'true' , function(response){
+                 alert(response.status);
+                 });
+
+                 slh.deleteChannel('private' , function(response){
+                 alert(response.status);
+                 });
+
+                 */
                  ////user control method
                  slu = new StreamLabUser();
                  var data = {
@@ -123,7 +129,7 @@
                  });
                  slu.getAllUser("{{-- url('streamLab/app/user') --}}" ,function(response){
                  console.log(response);
-                 }, 10 ,1);
+                 }, 10 ,1 , 'test');
                  slu.deleteUser("{{-- url('streamLab/app/user/delete') --}}" , 100 , function(response){
                  console.log(response)
                  });
