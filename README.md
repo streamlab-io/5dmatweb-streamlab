@@ -261,6 +261,54 @@ example
  now each channel you show in div this div will have data-channel attribute and we show online on span<br>
  this span will have attribute call data-channel-online that is aviable if you not set the callback function<br>
  
+ #create new channel
+ we make it easy to create channel you can use this funciton
+ 
+  ```javascript
+    slh.createChannel(channelName , callback , secret ,  url);
+
+ ```
+ 
+ channelName = Channe name must be unique in the same app<br>
+ callback = is function return what the api say<br>
+ type = ture you will make private channel do not add this if his channel will be public<br>
+ url = the url to add channel do not worry about this we set it for you<br>
+ Example for private channel
+ ```javascript
+    slh.createChannel('private'  , function(response){
+                 alert(response.status);
+    }, 'true');
+ 
+ ```
+  Example for public channel
+ ```javascript
+    slh.createChannel('public'  , function(response){
+                 alert(response.status);
+    });
+ 
+ ```
+ 
+  #delete channel
+  
+  you can delete exist channel like this
+  
+  ```javascript
+    slh.deleteChannel(channelName , callback , url)
+  ```
+
+  
+ channelName = Channe name must be unique in the same app<br>
+ callback = is function return what the api say<br>
+ url = the url to add channel do not worry about this we set it for you<br>
+ 
+ Example
+ ```javascript
+    slh.deleteChannel('private' , function(response){
+                 alert(response.status);
+   });
+ ```
+ 
+ 
  #update channel online user 
  now after you show all channel maybe you want to update online user <br>
  if user login or log out<br>
