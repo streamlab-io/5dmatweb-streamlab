@@ -355,11 +355,11 @@ then call createUser function<br>
 ```javascript
 slu = new StreamLabUser();
     var data = {
-      id:100,
-      secret:123,
-      _token:"{{ csrf_token() }}",
-      name:"hassan",
-      age:20
+          id:100,
+          secret:123,
+          _token:"{{ csrf_token() }}",
+          name:"hassan",
+          age:20
       };
       slu.createUser("{{ url('streamLab/create/user') }}" , data , function(response){
                  console.log(response);
@@ -374,11 +374,11 @@ then call updateUser function<br>
 ```javascript
 slu = new StreamLabUser();
     var data = {
-      id:100,
-      secret:123,
-      _token:"{{ csrf_token() }}",
-      name:"hassan",
-      age:20
+          id:100,
+          secret:123,
+          _token:"{{ csrf_token() }}",
+          name:"hassan",
+          age:20
       };
       slu.updateUser("{{ url('streamLab/create/user') }}" , data , function(response){
                  console.log(response);
