@@ -148,7 +148,9 @@ example
  sls.sendMessage("{{ url('streamLab/post/message') }}",
  {
    _token:"{{ csrf_token()}}"
-   ,message:slh.getVal('messageText')
+   ,message:slh.getVal('messageText'),
+   channelName:"public",
+   eventName:"SendMessages"
  }
  ,function(){
   slh.setVal('messageText' , ' ');
