@@ -10,7 +10,7 @@ Route::post("streamLab/create/user" , function(\Illuminate\Http\Request $request
 });
 
 Route::post('streamLab/post/message' , function(\Illuminate\Http\Request $request){
-    return \StreamLab\StreamLabProvider\Facades\StreamLabFacades::pushMessage('test' , 'test' , $request->message);
+    return \StreamLab\StreamLabProvider\Facades\StreamLabFacades::pushMessage($request->channelName , $request->eventName , $request->message);
 });
 
 Route::post('streamLab/update/user' , function(\Illuminate\Http\Request $request){
