@@ -1,20 +1,20 @@
 # 5dmatweb-streamlab
 RealTime messages services streamlab.io
 
-#installation
+# installation
 
 run this command form composer
 `composer require 5dmatweb/streamlab:dev-master`
   
   
- #add service provider 
+ # add service provider 
  open config/app add this line to provider array
  
 ```php
 StreamLab\StreamLabProvider\StreamLabServiceProvider::class,
 ```
 
-#and then publish this vendor
+# and then publish this vendor
 
 `php artisan vendor:publish`
     
@@ -25,7 +25,7 @@ this command will add to files <br>
 
 
 
-#How to Use
+# How to Use
 1-add account to https://streamlab.io<br>
 
 get app_id and key then add to config/stream-lab.php<br>
@@ -41,7 +41,7 @@ create user go to this link in our web site <a href="https://streamlab.io/en/das
 choose your app then go to users tab add new user then add this id in your link<br>
 
 
-#connect to socket
+# connect to socket
 you can listen to channels by this way frist make new object form our lib StreamLabSocket<br>
 the add this objec to this class<br>
 ```javascript
@@ -83,7 +83,7 @@ if you want to allow to any one to subscribe this channel just add the id and th
  });
 ```
 
-#get data
+# get data
 after this step to connect to soket now you can recive data from our api <br>
 now you must get this data with this funciton<br>
 ```javascript
@@ -97,19 +97,19 @@ sls.socket.onmessage = function(res){
 after you get data from our api now you must make new object from our html handel class this <br>
 class will allow you to make alot of things easy<br>
 
-#get messages
+# get messages
 you can get message now from our class StreamLabHtml by this function
 ```javascript
 slh.getMessage()
 ```
 
-#get online 
+# get online 
 you can get number of online on this channel from StreamLabHtml by this function
 ```javascript
 slh.getOnline()
 ```
 
-#show data to user
+# show data to user
 ther are two ways to show data to user frist one <br>
 by this funcitons from StreamLabHtml class<br>
 first way
@@ -134,7 +134,7 @@ id = id attribute<br>
 calss = class attribute<br>
 
 
-#send message to channel
+# send message to channel
 now you must know how you can push message to channel we make function to make it easy to you
 ```javascript
   sls.sendMessage(url,data,callback);
@@ -173,7 +173,7 @@ and we can make it more usable by add listner function like this
 ```
 <a href="https://github.com/streamlab-io/5dmatweb-streamlab#addeventlistener">addEventListener</a> is helper function we bulid for you see how to use
 
-#source of data
+# source of data
 when we send you data will have property that show you the type of data so you can get this source
 by this fucntion<br>
 ```javascript
@@ -186,7 +186,7 @@ this will return <br>
 4- channels = this will come  if user or vistor subscribe or left the channel <br>
 
 
-#show online users
+# show online users
 
 you can use this <a href="https://github.com/streamlab-io/5dmatweb-streamlab#get-all-user"> function </a> to get all users we make it easy to extract this info for you you can use this function
 
@@ -211,7 +211,7 @@ li = the tag we will put the user in this tag each user will push inside this ta
 id = id attribute<br>
 calss = class attribute<br>
 
-#append login user
+# append login user
 after you show online user you must update if user log out or another user login you must update <br>
 user list with the new data so you can use this function in this <a href="https://github.com/streamlab-io/5dmatweb-streamlab#get-data">action</a> after user set data to our lib you can now updat the list of online user this function will<br> append new user to list and update if user logout this function will update his status
 
@@ -243,7 +243,7 @@ slh.updateUserList(function(id){
 makeNotification is class that handel browser notfication look more form <a href="https://github.com/streamlab-io/5dmatweb-streamlab/#browser-notification">here</a>
 
 
-#get all channel
+# get all channel
 we make this function to help you to get all channel you have on you app
 ```javascript
   slh.getAllChannel(id , callback , url);
@@ -263,7 +263,7 @@ example
  now each channel you show in div this div will have data-channel attribute and we show online on span<br>
  this span will have attribute call data-channel-online that is aviable if you not set the callback function<br>
  
- #create new channel
+ # create new channel
  we make it easy to create channel you can use this funciton
  
   ```javascript
@@ -290,7 +290,7 @@ example
  
  ```
  
-  #delete channel
+  # delete channel
   
   you can delete exist channel like this
   
@@ -320,7 +320,7 @@ example
  ```
  this code will update the cahnnel test when user login or logout 
  
-#get channel info
+# get channel info
 if you want to get channel info you can use this funciton
 ```javascript
   slh.getChannel(channelName , channelSecret , callback , url)
@@ -343,7 +343,7 @@ this will return with public channel info call test
 
 
 
-#user controll
+# user controll
 
 we support to save your users info in our api this cool thing to check if users online or not <br>
 and where are they connect or in any channel they subscribe<br>
@@ -369,7 +369,7 @@ slu = new StreamLabUser();
 ```
 you can add any number of property to save in our api
 
-#update user
+# update user
 first make object form our lib call StreamLabUser<br>
 then make data object data object must have id ,secret , _token properties<br>
 then call updateUser function<br>
@@ -414,7 +414,7 @@ slu.getAllUser("{{ url('streamLab/app/user') }}" ,function(response){
       console.log(response);
 }, 10 ,1);
 ```
-#delete users
+# delete users
 you can delete users from our service with this function 
 ```javascript
 slu.userExist(url , userID ,callback)
@@ -429,7 +429,7 @@ slu.deleteUser("{{ url('streamLab/app/user/delete') }}" , userId , function(resp
       console.log(response)
 });
 ```
-#check if user exist
+# check if user exist
 you can check if user exist in our api or not just call this function
 ```javascript
 slu.userExist(url , userID ,callback)
@@ -453,7 +453,7 @@ example
 
 ```
 
-#browser notification
+# browser notification
 we make class that handel browser notification 
 
 #allow to use browser notification
@@ -463,7 +463,7 @@ when you make object form browser notification the browserNotification will be t
   sln.browserNotification = false
  ```
  
- #icon 
+ # icon 
  this lib allow to add icon to your notification so the default icon you will find it on public/streamlab/fb-pro.png<br>
 you can replace it or you can add new path or new url like this
 ```javascript
@@ -472,68 +472,68 @@ you can replace it or you can add new path or new url like this
   icon = "https://streamlab.io/";
 ```
 
-#time
+# time
 you can add how many time you need to show this notification the default is 500
 ```javascript
   sln.time = 1000
 ```
 
-#add notifiction 
+# add notifiction 
 now after this option you can add new notifiction by this fucntion
 ```javascript
   sln.makeNotification(title , message);
 ```
  
-#helper function
+# helper function
 we add a lot of helper function to make it easy to show or set or get data we use StreamLabHtml class for this
 
-#get data form input by id
+# get data form input by id
 this function return with data form the id you set
 ```javascript
   slh.getVal(id)
 ```
 
-#set data to input by id
+# set data to input by id
 this function set data to input by id
 ```javascript
   slh.setVal(id , value);
 ```
 
-#get data from html tag
+# get data from html tag
 this function return with tag innerhtml
 ```javascript
   slh.html(id);
 ```
 
-#append data to html tag
+# append data to html tag
 this function will append data to html tag
 ```javascript
   slh.append(id , data);
 ```
-#hide html element by id
+# hide html element by id
 this function will hide html tag by add style display none
 ```javascript
   slh.hide(id);
 ```
-#show html element by id
+# show html element by id
 this function will show html tag by remove style display none
 ```javascript
   slh.show(id);
 ```
 
-#set attribute to tag by id
+# set attribute to tag by id
 this function will add custome  attribute to tag
 ```javascript
   slh.setAttr(id , attrName , attrValue);
 ```
 
-#get attribute to tag by id
+# get attribute to tag by id
 this function will get  attribute value
 ```javascript
   slh.getAttr(id , attrName);
 ```
 
-#remove attribute to tag by id
+# remove attribute to tag by id
 this function will remove  attribute 
 ```javascript
   slh.removeAttr(id , attrName);
